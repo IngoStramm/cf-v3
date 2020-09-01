@@ -1,5 +1,5 @@
 {
-    "version" => "1.9.0",
+    "version": "1.9",
     "download_url": "https://github.com/IngoStramm/cf-v3/raw/master/dist/cf-v3.zip",
     "requires": "5.0",
     "tested": "5.4",
