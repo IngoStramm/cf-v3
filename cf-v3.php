@@ -671,9 +671,6 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'cf-v3'
 );
 
-$updateChecker->setBranch('master');
-
-
 //Optional: If you're using a private repository, specify the access token like this:
 // $myUpdateChecker->setAuthentication('your-token-here');
 
