@@ -25,7 +25,7 @@ function cf_plugin_info($res, $action, $args)
     if (false == $remote = get_transient('cf_update_' . $plugin_slug)) {
 
         // info.json is the file with the actual plugin information on your server
-        $remote = wp_remote_get('https://github.com/IngoStramm/cf-v3/raw/master/info.json', array(
+        $remote = wp_remote_get('https://raw.githubusercontent.com/IngoStramm/cf-v3/master/info.json', array(
             'timeout' => 10,
             'headers' => array(
                 'Accept' => 'application/json'
@@ -89,7 +89,7 @@ function cf_push_update($transient)
     if (false == $remote = get_transient('cf_upgrade_cf_v3')) {
 
         // info.json is the file with the actual plugin information on your server
-        $remote = wp_remote_get('https://github.com/IngoStramm/cf-v3/raw/master/info.json', array(
+        $remote = wp_remote_get('https://raw.githubusercontent.com/IngoStramm/cf-v3/master/info.json', array(
             'timeout' => 10,
             'headers' => array(
                 'Accept' => 'application/json'
