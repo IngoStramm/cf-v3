@@ -661,3 +661,5 @@ function cfv3_block_wp_admin_init()
 }
 
 $cfv3_user_caps = new Cfa_Previne_Edicao_Admin();
+
+require_once 'auto-update.php';

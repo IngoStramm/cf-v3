@@ -1,0 +1,13 @@
+{
+    "version" => "1.9.0",
+    "download_url": "https://github.com/IngoStramm/cf-v3/raw/master/dist/cf-v3.zip",
+    "requires": "5.0",
+    "tested": "5.4",
+    "requires_php": "7.1",
+    "last_updated": "2020-09-01 14:27:00",
+    "sections": {
+        "description": "Este plugin é parte integrante do ConverteFácil.",
+        "installation": "Faça o upload deste plugin no seu site.",
+        "changelog": "<h4>1.1 –  January 17, 2020</h4><ul><li>Some bugs are fixed.</li><li>Release date.</li></ul>"
+    }
+}
