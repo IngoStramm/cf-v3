@@ -86,7 +86,7 @@ function cf_push_update($transient)
     }
 
     // trying to get from cache first, to disable cache comment 10,20,21,22,24
-    if (false == $remote = get_transient('cf_upgrade_cf_v3')) {
+    // if (false == $remote = get_transient('cf_upgrade_cf-v3')) {
 
         // info.json is the file with the actual plugin information on your server
         $remote = wp_remote_get('https://raw.githubusercontent.com/IngoStramm/cf-v3/master/info.json', array(
@@ -96,10 +96,10 @@ function cf_push_update($transient)
             )
         ));
 
-        if (!is_wp_error($remote) && isset($remote['response']['code']) && $remote['response']['code'] == 200 && !empty($remote['body'])) {
-            set_transient('cf_upgrade_cf_v3', $remote, 43200); // 12 hours cache
-        }
-    }
+        // if (!is_wp_error($remote) && isset($remote['response']['code']) && $remote['response']['code'] == 200 && !empty($remote['body'])) {
+            // set_transient('cf_upgrade_cf-v3', $remote, 43200); // 12 hours cache
+        // }
+    // }
 
     if ($remote) {
 
@@ -120,12 +120,12 @@ function cf_push_update($transient)
     return $transient;
 }
 
-add_action('upgrader_process_complete', 'cf_after_update', 10, 2);
+// add_action('upgrader_process_complete', 'cf_after_update', 10, 2);
 
 function cf_after_update($upgrader_object, $options)
 {
     if ($options['action'] == 'update' && $options['type'] === 'plugin') {
         // just clean the cache when new plugin version is installed
-        delete_transient('cf_upgrade_cv_v3');
+        delete_transient('cf_upgrade_cf-v3');
     }
 }

@@ -662,4 +662,19 @@ function cfv3_block_wp_admin_init()
 
 $cfv3_user_caps = new Cfa_Previne_Edicao_Admin();
 
-require_once 'auto-update.php';
+// require_once 'auto-update.php';
+require 'plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/ingostramm/cf-v3',
+	__FILE__,
+	'cf-v3'
+);
+
+$updateChecker->setBranch('master');
+
+
+//Optional: If you're using a private repository, specify the access token like this:
+// $myUpdateChecker->setAuthentication('your-token-here');
+
+//Optional: Set the branch that contains the stable release.
+// $myUpdateChecker->setBranch('stable-branch-name');
