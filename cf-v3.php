@@ -1,10 +1,10 @@
 <?php
- 
+
 /**
  * Plugin Name: ConverteFacil 3 Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -113,12 +113,13 @@ function cfv3_customizacaoAdmin()
 	{
 		global $menu, $submenu;
 		add_menu_page(__('Editar Menus'), __(' Menus '), 'edit_theme_options', 'nav-menus.php', null, 'dashicons-menu', 60);
-		remove_menu_page('edit.php?post_type=elementor_library');                  //Elementor
-		remove_menu_page('themes.php');                 //Appearance
-		remove_menu_page('tools.php');                  //Tools
-		remove_menu_page('wds_wizard');                  //Tools
-		remove_menu_page('edit.php?post_type=blocks');                  //blocks
-		remove_menu_page('qligg');                  //blocks
+
+		remove_menu_page('edit.php?post_type=elementor_library');					//Elementor
+		remove_menu_page('themes.php');                 							//Appearance
+		remove_menu_page('tools.php');                  							//Tools
+		remove_menu_page('wds_wizard');
+		remove_menu_page('edit.php?post_type=blocks');								//blocks
+		remove_menu_page('qligg');
 
 		// Envato Elements
 		remove_submenu_page('envato-elements', 'envato-elements#/welcome');
@@ -173,7 +174,6 @@ function cfv3_customizacaoAdmin()
 
 		if (isset($submenu['envato-elements'][0]) && isset($submenu['envato-elements'][1])) :
 			$submenu['envato-elements'][0] = $submenu['envato-elements'][1]; // substitui oa URL
-		// unset( $submenu[ 'envato-elements' ][ 1 ] ); // Remove o segundo Template Kits
 		endif;
 
 		if (isset($submenu['envato-elements'][5]))
