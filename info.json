@@ -1,13 +1,24 @@
 {
-    "version" => "1.9",
+    "name": "ConverteFacil 3 Admin",
+    "version": "1.9",
     "download_url": "https://github.com/IngoStramm/cf-v3/raw/master/dist/cf-v3.zip",
-    "requires": "5.0",
-    "tested": "5.4",
-    "requires_php": "7.1",
-    "last_updated": "2020-09-01 14:27:00",
+    "homepage": "https://agencialaf.com",
+    "requires": "4.5",
+    "tested": "4.8",
+    "last_updated": "2020-09-01 15:30:00",
+    "upgrade_notice": "Atualização do Converte Fácil disponível",
+    "author": "Ingo Stramm",
+    "author_homepage": "https://agencialaf.com",
     "sections": {
         "description": "Este plugin é parte integrante do ConverteFácil.",
-        "installation": "Faça o upload deste plugin no seu site.",
-        "changelog": "<h4>1.1 –  January 17, 2020</h4><ul><li>Some bugs are fixed.</li><li>Release date.</li></ul>"
+        "installation": "A instalação deste plugin deve ser feita pelo Converte Fácil.",
+    },
+    "icons": {
+        "1x": "http://w-shadow.com/files/external-update-example/assets/icon-128x128.png",
+        "2x": "http://w-shadow.com/files/external-update-example/assets/icon-256x256.png"
+    },
+    "banners": {
+        "low": "http://w-shadow.com/files/external-update-example/assets/banner-772x250.png",
+        "high": "http://w-shadow.com/files/external-update-example/assets/banner-1544x500.png"
     }
 }

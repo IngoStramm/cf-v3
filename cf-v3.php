@@ -663,9 +663,10 @@ function cfv3_block_wp_admin_init()
 $cfv3_user_caps = new Cfa_Previne_Edicao_Admin();
 
 // require_once 'auto-update.php';
+
 require 'plugin-update-checker-4.10/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/ingostramm/cf-v3',
+$updateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://raw.githubusercontent.com/IngoStramm/cf-v3/master/info.json',
 	__FILE__,
 	'cf-v3'
 );
