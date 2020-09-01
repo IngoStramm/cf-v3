@@ -116,6 +116,7 @@ module.exports = function (grunt) {
                     '!../**.md',
                     '!<%= dirs.sass %>/**',
                     '!../**.zip',
+                    '!../info.json',
                     '<%= dirs.js %>/cf-v3.min.js'
                 ],
                 dest: '../dist/<%= pkg.name %>.zip'
