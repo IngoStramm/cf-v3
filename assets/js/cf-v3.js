@@ -5,7 +5,7 @@ jQuery( function( $ ) {
 		$( 'h1' ).each( function() {
 			var h1 = $( this );
 			console.log('h1.text(): ' + h1.text());
-			if( h1.text() == 'New - Premium Template Kits' ) {
+			if( h1.text() === 'New - Premium Template Kits' ) {
 				// console.log('esconder msg');
 			} else {
 				// console.log('não existe msg');
