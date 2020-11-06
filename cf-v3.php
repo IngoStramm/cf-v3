@@ -746,5 +746,9 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://raw.githubusercontent.com/IngoStramm/cf-v3/master/info.json',
 	__FILE__,
 	'cf-v3'
+<<<<<<< HEAD
+);
+>>>>>>> parent of 471bef5... going live
+=======
 );
 >>>>>>> parent of 471bef5... going live
