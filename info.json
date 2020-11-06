@@ -1,7 +1,7 @@
 {
-    "name": "Cintter",
-    "version": "1.0.0",
-    "download_url": "https://github.com/IngoStramm/cintter/raw/master/dist/cintter.zip",
+    "name": "ConverteFacil 3 Admin",
+    "version": "2.0.0",
+    "download_url": "https://github.com/IngoStramm/cf-v3/raw/master/dist/cf-v3.zip",
     "homepage": "https://agencialaf.com",
     "requires": "4.7",
     "tested": "5.5",
