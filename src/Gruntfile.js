@@ -27,7 +27,7 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= dirs.js %>/cintter.js'
+                '<%= dirs.js %>/cf-v3.js'
             ]
         },
 
@@ -35,8 +35,8 @@ module.exports = function (grunt) {
         uglify: {
             dist: {
                 files: {
-                    '<%= dirs.js %>/cintter.min.js': [
-                        '<%= dirs.js %>/cintter.js'    // Custom JavaScript
+                    '<%= dirs.js %>/cf-v3.min.js': [
+                        '<%= dirs.js %>/cf-v3.js'    // Custom JavaScript
                     ]
                 }
             }
@@ -118,7 +118,7 @@ module.exports = function (grunt) {
                     '!<%= dirs.sass %>/**',
                     '!../**.zip',
                     '!../info.json',
-                    '<%= dirs.js %>/cintter.min.js'
+                    '<%= dirs.js %>/cf-v3.min.js'
                 ],
                 dest: '../dist/<%= pkg.name %>.zip'
             }

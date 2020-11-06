@@ -1,8 +1,8 @@
 {
-    "name": "cintter",
-    "description": "Plugin da Cintter",
-    "version": "1.0.0",
-    "title": "Cintter",
+    "name": "cf-v3",
+    "description": "Plugin do Convetre Fácil",
+    "version": "2.0.1",
+    "title": "Convetre Fácil",
     "homepage": "https://agencialaf.com",
     "main": "Gruntfile.js",
     "devDependencies": {
