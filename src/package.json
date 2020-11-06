@@ -1,8 +1,8 @@
 {
-    "name": "cf-v3",
-    "description": "Plugin do Converte Fácil",
-    "version": "2.3.0",
-    "title": "Converte Fácil",
+    "name": "cintter",
+    "description": "Plugin da Cintter",
+    "version": "1.0.0",
+    "title": "Cintter",
     "homepage": "https://agencialaf.com",
     "main": "Gruntfile.js",
     "devDependencies": {
