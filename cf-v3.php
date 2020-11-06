@@ -107,29 +107,28 @@ function cfv3_customizacaoAdmin()
 	 * Remove Menus do sidebar
 	 *
 	 */
-    add_action('admin_menu', 'cfv3_remove_menus_editor');
+	add_action('admin_menu', 'cfv3_remove_menus_editor');
 
-    function cfv3_remove_menus_editor()
-    {
-        global $menu, $submenu;
-        add_menu_page(__('Editar Menus'), __(' Menus '), 'edit_theme_options', 'nav-menus.php', null, 'dashicons-menu', 60);
+	function cfv3_remove_menus_editor()
+	{
+		global $menu, $submenu;
+		add_menu_page(__('Editar Menus'), __(' Menus '), 'edit_theme_options', 'nav-menus.php', null, 'dashicons-menu', 60);
+		remove_menu_page('edit.php?post_type=elementor_library');                  //Elementor
+		remove_menu_page('themes.php');                 //Appearance
+		remove_menu_page('tools.php');                  //Tools
+		remove_menu_page('wds_wizard');                  //Tools
+		remove_menu_page('edit.php?post_type=blocks');                  //blocks
+		remove_menu_page('qligg');                  //blocks
 
-        remove_menu_page('edit.php?post_type=elementor_library');                    //Elementor
-        remove_menu_page('themes.php');                                             //Appearance
-        remove_menu_page('tools.php');                                              //Tools
-        remove_menu_page('wds_wizard');
-        remove_menu_page('edit.php?post_type=blocks');                                //blocks
-        remove_menu_page('qligg');
+		// Envato Elements
+		remove_submenu_page('envato-elements', 'envato-elements#/welcome');
+		remove_submenu_page('envato-elements', 'envato-elements#/settings');
+		remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-kits');
+		remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-blocks');
+		remove_submenu_page('envato-elements', 'envato-elements#/template-kits/installed-kits');
+	}
 
-        // Envato Elements
-        remove_submenu_page('envato-elements', 'envato-elements#/welcome');
-        remove_submenu_page('envato-elements', 'envato-elements#/settings');
-        remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-kits');
-        remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-blocks');
-        remove_submenu_page('envato-elements', 'envato-elements#/template-kits/installed-kits');
-    }
-
-    /*
+	/*
 	 *
 	 * Renomeia Menus do sidebar
 	 *
