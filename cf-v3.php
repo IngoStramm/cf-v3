@@ -413,9 +413,16 @@ function cfv3_customizacaoAdmin()
 
     function cfv3_get_widgets()
     {
-        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed//?post_type=widget");
+        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed/?post_type=widget");
 
-        if (!$xml) return;
+        if (!$xml)
+            return add_meta_box('cf-widget-default', __('Suporte Exclusivo', 'cfv3'), function () {
+                $content = '
+                <img alt="' . __('Suporte Exclusivo', 'cfv3') . '" src="' . CFV3_URL . '/assets/images/suporte-exclusivo.jpg" style="width: 100%; height: auto; display: block; margin: auto;" />
+                ';
+                $content .= '<p>Precisa de ajuda? Você tem suporte exclusivo com o Converte Fácil de Segunda a Sexta das 10 às 16h. <a href="https://convertefacil.com/suporte/" target="_blank" rel="noopener noreferrer">Entenda mais aqui.</a></p>';
+                echo $content;
+            }, 'dashboard', 'normal', 'high');
 
         $widgets = [];
         foreach ($xml->children() as $node_1) {
@@ -500,11 +507,11 @@ function cfv3_customizacaoAdmin()
                     $arr_screens[] = (string)$item->screen;
                 }
                 $arr_notice['screens'] = $arr_screens;
-                
+
                 $notices[(int)$node_2->menu_order] = $arr_notice;
             }
         }
-        
+
         ksort($notices);
 
         foreach ($notices as $k => $notice) :
