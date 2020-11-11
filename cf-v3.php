@@ -413,72 +413,22 @@ function cfv3_customizacaoAdmin()
 
     function cfv3_get_widgets()
     {
-        // $request_2 = wp_remote_get('https://painel.convertefacil.com.br/feed/?post_type=widget');
-        // include_once(ABSPATH . WPINC . '/feed.php');
+        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed//?post_type=widget");
 
-        // Get a SimplePie feed object from the specified feed source.
-        $rss = wp_remote_get('https://painel.convertefacil.com.br/feed/?post_type=widget');
-        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed/?post_type=notice") or die("Error: Cannot create object");
-        foreach ($xml->children() as $node_1) {
-            foreach ($node_1->item as $node_2) {
-                cfv3_debug($node_2);
-            }
-        }
-
-        // Parei aqui
-
-        $rss_body = wp_remote_retrieve_body($rss);
-        $rss_data = json_decode($rss_body, true);
-
-
-        // $rss = fetch_feed('https://painel.convertefacil.com.br/feed/?post_type=widget');
-        /*
-        
-        if (is_wp_error($rss)) :
-            $error_string = $rss->get_error_message();
-            cfv3_debug($error_string);
-            return;
-        endif;
-
-
-        // Figure out how many total items there are, but limit it to 5. 
-        $maxitems = $rss->get_item_quantity(5);
-
-        // Build an array of all the items, starting with element 0 (first element).
-        $rss_items = $rss->get_items(0, $maxitems);
-
-        foreach ($rss_items as $rss_item) {
-
-            cfv3_debug($rss_item->get_title());
-            // cfv3_debug($rss_item->get_content());
-        }
-        */
-        $request = wp_remote_get('https://painel.convertefacil.com.br/wp-json/wp/v2/widget?_embed');
-
-        $body = wp_remote_retrieve_body($request);
-
-        $data = json_decode($body, true);
-
-        if (!$data) :
-            return;
-        endif;
+        if (!$xml) return;
 
         $widgets = [];
-
-        foreach ($data as $widget) :
-
-            $widgets[$widget['menu_order']] = array(
-                'title' => $widget['title']['rendered'],
-                'content' => trim($widget['content']['rendered']),
-                'thumb' => $widget['_embedded']['wp:featuredmedia'][0]['source_url'],
-                'position' => $widget['post-meta-fields']['widget_options_select'][0]
-            );
-
-        endforeach;
-
+        foreach ($xml->children() as $node_1) {
+            foreach ($node_1->item as $node_2) {
+                $widgets[(int)$node_2->menu_order] = array(
+                    'title' => (string)$node_2->title,
+                    'content' => trim((string)$node_2->content),
+                    'thumb' => (string)$node_2->thumb,
+                    'position' => (string)$node_2->position
+                );
+            }
+        }
         ksort($widgets);
-
-        // cfv3_debug( $widgets );
 
         foreach ($widgets as $k => $widget) :
             $content = '<img src="' . $widget['thumb'] .  '" alt="' . $widget['title'] . '" style="width: 100%; height: auto; display: block; margin: auto;" />';
@@ -494,14 +444,9 @@ function cfv3_customizacaoAdmin()
     function cfp_admin_notice()
     {
 
-        $request = wp_remote_get('https://painel.convertefacil.com.br/wp-json/wp/v2/notice');
+        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed//?post_type=notice");
 
-        $body = wp_remote_retrieve_body($request);
-
-        $data = json_decode($body, true);
-
-        if (!$data)
-            return;
+        if (!$xml) return;
 
         $current_screen = get_current_screen();
         $current_screen = $current_screen->id;
@@ -542,17 +487,24 @@ function cfv3_customizacaoAdmin()
         $notices = [];
 
 
-        foreach ($data as $notice) :
+        foreach ($xml->children() as $node_1) {
+            foreach ($node_1->item as $node_2) {
+                $arr_notice = [];
 
-            $notices[$notice['menu_order']] = array(
-                'title' => $notice['title']['rendered'],
-                'content' => trim($notice['content']['rendered']),
-                'notice_type' => $notice['post-meta-fields']['notice_options_notice_type'][0],
-                'screens' => $notice['post-meta-fields']['notice_options_screen'],
-            );
+                $arr_notice['title'] = (string)$node_2->title;
+                $arr_notice['content'] = trim((string)$node_2->content);
+                $arr_notice['notice_type'] = (string)$node_2->notice_type;
 
-        endforeach;
-
+                $arr_screens = [];
+                foreach ($node_2->screens as $item) {
+                    $arr_screens[] = (string)$item->screen;
+                }
+                $arr_notice['screens'] = $arr_screens;
+                
+                $notices[(int)$node_2->menu_order] = $arr_notice;
+            }
+        }
+        
         ksort($notices);
 
         foreach ($notices as $k => $notice) :
