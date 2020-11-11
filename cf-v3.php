@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil 3 Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.0.1
+ * Version: 2.1.0
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -413,29 +413,36 @@ function cfv3_customizacaoAdmin()
 
     function cfv3_get_widgets()
     {
-        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed/?post_type=widget");
+        // $start_time = microtime(true);
+        if (false === ($widgets = get_transient('cf_panel_widgets'))) {
+            $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed/?post_type=widget");
 
-        if (!$xml)
-            return add_meta_box('cf-widget-default', __('Suporte Exclusivo', 'cfv3'), function () {
-                $content = '
+            if (!$xml)
+                return add_meta_box('cf-widget-default', __('Suporte Exclusivo', 'cfv3'), function () {
+                    $content = '
                 <img alt="' . __('Suporte Exclusivo', 'cfv3') . '" src="' . CFV3_URL . '/assets/images/suporte-exclusivo.jpg" style="width: 100%; height: auto; display: block; margin: auto;" />
                 ';
-                $content .= '<p>Precisa de ajuda? Você tem suporte exclusivo com o Converte Fácil de Segunda a Sexta das 10 às 16h. <a href="https://convertefacil.com/suporte/" target="_blank" rel="noopener noreferrer">Entenda mais aqui.</a></p>';
-                echo $content;
-            }, 'dashboard', 'normal', 'high');
+                    $content .= '<p>Precisa de ajuda? Você tem suporte exclusivo com o Converte Fácil de Segunda a Sexta das 10 às 16h. <a href="https://convertefacil.com/suporte/" target="_blank" rel="noopener noreferrer">Entenda mais aqui.</a></p>';
+                    echo $content;
+                }, 'dashboard', 'normal', 'high');
 
-        $widgets = [];
-        foreach ($xml->children() as $node_1) {
-            foreach ($node_1->item as $node_2) {
-                $widgets[(int)$node_2->menu_order] = array(
-                    'title' => (string)$node_2->title,
-                    'content' => trim((string)$node_2->content),
-                    'thumb' => (string)$node_2->thumb,
-                    'position' => (string)$node_2->position
-                );
+            $widgets = [];
+            foreach ($xml->children() as $node_1) {
+                foreach ($node_1->item as $node_2) {
+                    $widgets[(int)$node_2->menu_order] = array(
+                        'title' => (string)$node_2->title,
+                        'content' => trim((string)$node_2->content),
+                        'thumb' => (string)$node_2->thumb,
+                        'position' => (string)$node_2->position
+                    );
+                }
             }
+            ksort($widgets);
+            set_transient('cf_panel_widgets', $widgets, HOUR_IN_SECONDS);
         }
-        ksort($widgets);
+        // $end_time = microtime(true);
+        // $run_time = ($end_time - $start_time);
+        // cfv3_debug($run_time);
 
         foreach ($widgets as $k => $widget) :
             $content = '<img src="' . $widget['thumb'] .  '" alt="' . $widget['title'] . '" style="width: 100%; height: auto; display: block; margin: auto;" />';
@@ -451,12 +458,41 @@ function cfv3_customizacaoAdmin()
     function cfp_admin_notice()
     {
 
-        $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed//?post_type=notice");
+        // $start_time = microtime(true);
 
-        if (!$xml) return;
+        if (false === ($notices = get_transient('cf_panel_notices'))) {
 
-        $current_screen = get_current_screen();
-        $current_screen = $current_screen->id;
+            $xml = simplexml_load_file("https://painel.convertefacil.com.br/feed//?post_type=notice");
+
+            if (!$xml) return;
+
+            $notices = [];
+
+            foreach ($xml->children() as $node_1) {
+                foreach ($node_1->item as $node_2) {
+                    $arr_notice = [];
+
+                    $arr_notice['title'] = (string)$node_2->title;
+                    $arr_notice['content'] = trim((string)$node_2->content);
+                    $arr_notice['notice_type'] = (string)$node_2->notice_type;
+
+                    $arr_screens = [];
+                    foreach ($node_2->screens as $item) {
+                        $arr_screens[] = (string)$item->screen;
+                    }
+                    $arr_notice['screens'] = $arr_screens;
+
+                    $notices[(int)$node_2->menu_order] = $arr_notice;
+                }
+            }
+
+            ksort($notices);
+            set_transient('cf_panel_notices', $notices, HOUR_IN_SECONDS);
+        }
+
+        // $end_time = microtime(true);
+        // $run_time = ($end_time - $start_time);
+        // cfv3_debug($run_time);
 
         $all_screens = array(
             'dashboard' => array(
@@ -491,28 +527,8 @@ function cfv3_customizacaoAdmin()
             ),
         );
 
-        $notices = [];
-
-
-        foreach ($xml->children() as $node_1) {
-            foreach ($node_1->item as $node_2) {
-                $arr_notice = [];
-
-                $arr_notice['title'] = (string)$node_2->title;
-                $arr_notice['content'] = trim((string)$node_2->content);
-                $arr_notice['notice_type'] = (string)$node_2->notice_type;
-
-                $arr_screens = [];
-                foreach ($node_2->screens as $item) {
-                    $arr_screens[] = (string)$item->screen;
-                }
-                $arr_notice['screens'] = $arr_screens;
-
-                $notices[(int)$node_2->menu_order] = $arr_notice;
-            }
-        }
-
-        ksort($notices);
+        $current_screen = get_current_screen();
+        $current_screen = $current_screen->id;
 
         foreach ($notices as $k => $notice) :
             $notice_screens = [];
