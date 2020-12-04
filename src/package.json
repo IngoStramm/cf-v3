@@ -1,7 +1,7 @@
 {
     "name": "cf-v3",
     "description": "Plugin do Convetre Fácil",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "title": "Convetre Fácil",
     "homepage": "https://agencialaf.com",
     "main": "Gruntfile.js",

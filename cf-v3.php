@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil 3 Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.1.0
+ * Version: 2.1.1
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -90,6 +90,7 @@ function cfv3_customizacaoAdmin()
         unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
         // Health Check
         unset($wp_meta_boxes['dashboard']['normal']['core']['health_check_status']);
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_site_health']);
         // Booking
         unset($wp_meta_boxes['dashboard']['normal']['core']['booking_dashboard_widget']);
         // Woocommerce Avaliações Recentes
