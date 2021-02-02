@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil 3 Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.1.1
+ * Version: 2.1.2
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -423,7 +423,7 @@ function cfv3_customizacaoAdmin()
                     $content = '
                 <img alt="' . __('Suporte Exclusivo', 'cfv3') . '" src="' . CFV3_URL . '/assets/images/suporte-exclusivo.jpg" style="width: 100%; height: auto; display: block; margin: auto;" />
                 ';
-                    $content .= '<p>Precisa de ajuda? Você tem suporte exclusivo com o Converte Fácil de Segunda a Sexta das 10 às 16h. <a href="https://convertefacil.com/suporte/" target="_blank" rel="noopener noreferrer">Entenda mais aqui.</a></p>';
+                    $content .= '<p>Precisa de ajuda? Você tem suporte exclusivo com o Converte Fácil de Segunda a Sexta das 10 às 16h.</p>';
                     echo $content;
                 }, 'dashboard', 'normal', 'high');
 
