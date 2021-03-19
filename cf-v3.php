@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Plugin Name: ConverteFacil 3 Admin
+ * Plugin Name: ConverteFacil Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.1.2
+ * Version: 2.2.0
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -22,6 +22,8 @@ function cfv3_debug($debug)
     echo '</pre>';
 }
 
+require_once 'cmb.php';
+
 function cfv3_get_user_role()
 {
     if (is_user_logged_in()) :
@@ -31,6 +33,32 @@ function cfv3_get_user_role()
     else :
         return false;
     endif;
+}
+
+$cfv3_disable_users_restriction = cfv3_get_option('cfv3_disable_users_restriction');
+
+// get the the role object
+$role_object = get_role('editor');
+
+// add $cap capability to this role object
+$role_object->add_cap('edit_theme_options');
+
+if ($cfv3_disable_users_restriction) {
+    $role_object->add_cap('list_users');
+    $role_object->add_cap('edit_users');
+    $role_object->add_cap('delete_users');
+    $role_object->add_cap('create_users');
+    $role_object->add_cap('add_users');
+    $role_object->add_cap('promote_users');
+    $role_object->add_cap('remove_users');
+} else {
+    $role_object->remove_cap('list_users');
+    $role_object->remove_cap('edit_users');
+    $role_object->remove_cap('delete_users');
+    $role_object->remove_cap('create_users');
+    $role_object->remove_cap('add_users');
+    $role_object->remove_cap('promote_users');
+    $role_object->remove_cap('remove_users');
 }
 
 add_action('init', 'cfv3_checka_administrador');
@@ -49,19 +77,6 @@ function cfv3_checka_administrador()
 */
 function cfv3_customizacaoAdmin()
 {
-
-    // get the the role object
-    $role_object = get_role('editor');
-
-    // add $cap capability to this role object
-    $role_object->add_cap('edit_theme_options');
-    $role_object->remove_cap('list_users');
-    $role_object->remove_cap('edit_users');
-    $role_object->remove_cap('delete_users');
-    $role_object->remove_cap('create_users');
-    $role_object->remove_cap('add_users');
-    $role_object->remove_cap('promote_users');
-    $role_object->remove_cap('remove_users');
 
     /*
 	 *
@@ -186,6 +201,9 @@ function cfv3_customizacaoAdmin()
 
     function cfv3_add_user_menu()
     {
+        $cfv3_disable_users_restriction = cfv3_get_option('cfv3_disable_users_restriction');
+        if ($cfv3_disable_users_restriction)
+            return;
         add_menu_page(__('Usuários', 'cf_v3'), __('Usuários', 'cf_v3'), 'edit_theme_options', 'new-users', 'cf_v3_new_users_page', 'dashicons-groups', null);
     }
 
@@ -580,9 +598,9 @@ function cfv3_customizacaoUsers()
 	 * Remove Menus do sidebar
 	 *
 	 */
-    add_action('admin_menu', 'cfv3_remove_menus_users');
+    add_action('admin_menu', 'cfv3_remove_menus_wpcf7');
 
-    function cfv3_remove_menus_users()
+    function cfv3_remove_menus_wpcf7()
     {
         global $menu, $submenu;
         remove_menu_page('wpcf7');    // CF7
@@ -675,6 +693,7 @@ function cfv3_block_wp_admin_init()
         }
     }
 }
+
 
 $cfv3_user_caps = new Cfa_Previne_Edicao_Admin();
 
