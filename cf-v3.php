@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.2.0
+ * Version: 2.2.1
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -38,28 +38,55 @@ function cfv3_get_user_role()
 $cfv3_disable_users_restriction = cfv3_get_option('cfv3_disable_users_restriction');
 
 // get the the role object
-$role_object = get_role('editor');
+$editor_role_object = get_role('editor');
 
 // add $cap capability to this role object
-$role_object->add_cap('edit_theme_options');
+$editor_role_object->add_cap('edit_theme_options');
 
 if ($cfv3_disable_users_restriction) {
-    $role_object->add_cap('list_users');
-    $role_object->add_cap('edit_users');
-    $role_object->add_cap('delete_users');
-    $role_object->add_cap('create_users');
-    $role_object->add_cap('add_users');
-    $role_object->add_cap('promote_users');
-    $role_object->add_cap('remove_users');
+    $editor_role_object->add_cap('list_users');
+    $editor_role_object->add_cap('edit_users');
+    $editor_role_object->add_cap('delete_users');
+    $editor_role_object->add_cap('create_users');
+    $editor_role_object->add_cap('add_users');
+    $editor_role_object->add_cap('promote_users');
+    $editor_role_object->add_cap('remove_users');
 } else {
-    $role_object->remove_cap('list_users');
-    $role_object->remove_cap('edit_users');
-    $role_object->remove_cap('delete_users');
-    $role_object->remove_cap('create_users');
-    $role_object->remove_cap('add_users');
-    $role_object->remove_cap('promote_users');
-    $role_object->remove_cap('remove_users');
+    $editor_role_object->remove_cap('list_users');
+    $editor_role_object->remove_cap('edit_users');
+    $editor_role_object->remove_cap('delete_users');
+    $editor_role_object->remove_cap('create_users');
+    $editor_role_object->remove_cap('add_users');
+    $editor_role_object->remove_cap('promote_users');
+    $editor_role_object->remove_cap('remove_users');
 }
+
+function shop_editor_role_init()
+{
+    $shop_editor_role_object = get_role('shop_editor');
+    if (!isset($shop_editor_role_object))
+        return;
+    $cfv3_disable_users_restriction = cfv3_get_option('cfv3_disable_users_restriction');
+    if ($cfv3_disable_users_restriction) {
+        $shop_editor_role_object->add_cap('list_users');
+        $shop_editor_role_object->add_cap('edit_users');
+        $shop_editor_role_object->add_cap('delete_users');
+        $shop_editor_role_object->add_cap('create_users');
+        $shop_editor_role_object->add_cap('add_users');
+        $shop_editor_role_object->add_cap('promote_users');
+        $shop_editor_role_object->add_cap('remove_users');
+    } else {
+        $shop_editor_role_object->remove_cap('list_users');
+        $shop_editor_role_object->remove_cap('edit_users');
+        $shop_editor_role_object->remove_cap('delete_users');
+        $shop_editor_role_object->remove_cap('create_users');
+        $shop_editor_role_object->remove_cap('add_users');
+        $shop_editor_role_object->remove_cap('promote_users');
+        $shop_editor_role_object->remove_cap('remove_users');
+    }
+}
+
+shop_editor_role_init();
 
 add_action('init', 'cfv3_checka_administrador');
 
