@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.2.1
+ * Version: 2.2.2
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -163,6 +163,7 @@ function cfv3_customizacaoAdmin()
         remove_menu_page('wds_wizard');
         remove_menu_page('edit.php?post_type=blocks');                                //blocks
         remove_menu_page('qligg');
+        remove_menu_page('disqus');
 
         // Envato Elements
         remove_submenu_page('envato-elements', 'envato-elements#/welcome');
@@ -354,6 +355,7 @@ function cfv3_customizacaoAdmin()
     function cfv3_remove_bar_menu_items($wp_admin_bar)
     {
         $wp_admin_bar->remove_node('wds_wizard');
+        $wp_admin_bar->remove_node('disqus');
     }
 
     add_action('wp_head', 'cfv3_hide_avatar_style');
