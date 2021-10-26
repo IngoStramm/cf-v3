@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 2.2.2
+ * Version: 2.3.0
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
@@ -235,6 +235,7 @@ function cfv3_customizacaoAdmin()
         add_menu_page(__('Usuários', 'cf_v3'), __('Usuários', 'cf_v3'), 'edit_theme_options', 'new-users', 'cf_v3_new_users_page', 'dashicons-groups', null);
     }
 
+
     function cf_v3_new_users_page()
     {
 ?>
@@ -356,6 +357,25 @@ function cfv3_customizacaoAdmin()
     {
         $wp_admin_bar->remove_node('wds_wizard');
         $wp_admin_bar->remove_node('disqus');
+    }
+
+    add_action('admin_bar_menu', 'cfv3_admin_bar_item', 500);
+    
+    function cfv3_admin_bar_item(WP_Admin_Bar $admin_bar)
+    {
+        if (!class_exists('Hummingbird\\WP_Hummingbird'))
+            return;
+
+        $admin_bar->add_menu(array(
+            'id'    => 'cfv3-clear-cache',
+            'parent' => null,
+            'group'  => null,
+            'title' => __('Limpar cache', 'cfv3'), //you can use img tag with image link. it will show the image icon Instead of the title.
+            'href'  => '#',
+            // 'meta' => [
+            //     'title' => __('Limpar cache do site', 'cfv3'), //This title will show on hover
+            // ]
+        ));
     }
 
     add_action('wp_head', 'cfv3_hide_avatar_style');
@@ -599,10 +619,17 @@ function cfv3_customizacaoAdmin()
     }
 } // Fim cfv3_customizacaoAdmin()
 
+add_action('admin_enqueue_scripts', 'cfv3_add_script');
+
 function cfv3_add_script()
 {
-    wp_register_script('cf-v3-script', CFV3_URL . 'assets/js/cf-v3.js', array('jquery'), '1.0.0', true);
+    $min = (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1', '10.0.0.3'))) ? '' : '.min';
+
+    wp_register_script('cf-v3-script', CFV3_URL . 'assets/js/cf-v3' . $min . '.js', array(), '1.0.0', true);
+
     wp_enqueue_script('cf-v3-script');
+
+    wp_localize_script('cf-v3-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 
 add_action('init', 'cfv3_checka_user');
