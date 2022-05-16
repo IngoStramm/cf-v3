@@ -2,6 +2,7 @@
 module.exports = function (grunt) {
     'use strict';
 
+    const sass = require('node-sass');
     require('load-grunt-tasks')(grunt);
 
     var odinConfig = {
@@ -15,8 +16,6 @@ module.exports = function (grunt) {
             js: '../assets/js',
             sass: '../assets/sass',
             images: '../assets/images',
-            fonts: '../assets/fonts',
-            core: '../core',
             tmp: 'tmp'
         },
 
@@ -44,18 +43,19 @@ module.exports = function (grunt) {
 
         // compile scss/sass files to CSS
         sass: {
+            options: {
+                implementation: sass,
+                sourceMap: true,
+                outputStyle: 'compressed'
+            },
             dist: {
-                options: {
-                    style: 'compressed',
-                    sourcemap: 'none'
-                },
                 files: [{
                     expand: true,
                     cwd: '<%= dirs.sass %>',
                     src: ['*.scss'],
                     dest: '<%= dirs.css %>',
                     ext: '.css'
-                }]
+                }],
             }
         },
 
@@ -147,6 +147,7 @@ module.exports = function (grunt) {
     // Compress
     grunt.registerTask('compress', [
         'default',
+        'optimize',
         'zip'
     ]);
 
