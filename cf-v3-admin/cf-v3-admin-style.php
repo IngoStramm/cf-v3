@@ -59,8 +59,9 @@ function cfv3_admin_style()
             li#add-category,
             li#woocommerce_endpoints_nav_link,
             span.delete-action,
-            .major-publishing-actions label.menu-name-label,
-            .major-publishing-actions input#menu-name,
+            /* .major-publishing-actions label.menu-name-label, */
+            /* .major-publishing-actions input#menu-name, */
+            /* span.add-edit-menu-action, */
             .nav-tab-wrapper {
                 display: none !important;
             }
@@ -69,6 +70,32 @@ function cfv3_admin_style()
             li#add-post-type-post,
             li#add-custom-links {
                 display: block !important;
+            }
+
+            .manage-menus span.add-edit-menu-action {
+                font-size: 0;
+            }
+
+            .manage-menus span.add-edit-menu-action::before {
+                content: 'Edite o menu.';
+                font-size: 1rem;
+            }
+
+            .major-publishing-actions label.menu-name-label {
+                pointer-events: none;
+            }
+
+            .major-publishing-actions input#menu-name {
+                width: auto;
+                border: none;
+                background: transparent;
+                /* cursor: default; */
+                pointer-events: none;
+            }
+
+            .major-publishing-actions input#menu-name:focus {
+                box-shadow: 0 0 0 transparent;
+                pointer-events: none;
             }
         </style>
     <?php elseif ($screen->id == 'users') : ?>

@@ -27,8 +27,18 @@ function cfv3_is_not_an_administrator_admin_bar()
  */
 function cfv3_remove_admin_bar_menu_items($wp_admin_bar)
 {
+    $cfv3_comments_status = get_default_comment_status();
+    if ($cfv3_comments_status !== 'open')
+        $wp_admin_bar->remove_node('comments');
+
+    $wp_admin_bar->remove_node('wp-logo');
     $wp_admin_bar->remove_node('wds_wizard');
     $wp_admin_bar->remove_node('disqus');
+    $wp_admin_bar->remove_node('about');
+    $wp_admin_bar->remove_node('wporg');
+    $wp_admin_bar->remove_node('documentation');
+    $wp_admin_bar->remove_node('support-forums');
+    $wp_admin_bar->remove_node('feedback');
 }
 
 /**

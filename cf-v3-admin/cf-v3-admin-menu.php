@@ -64,6 +64,10 @@ function cfv3_remove_menu_items()
     remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-kits');
     remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-blocks');
     remove_submenu_page('envato-elements', 'envato-elements#/template-kits/installed-kits');
+
+    $cfv3_comments_status = get_default_comment_status();
+    if ($cfv3_comments_status !== 'open')
+        remove_menu_page('edit-comments.php');
 }
 
 /**

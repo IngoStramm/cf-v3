@@ -4,7 +4,7 @@
  * Plugin Name: ConverteFacil Admin
  * Plugin URI: https://agencialaf.com
  * Description: Este plugin é parte integrante do ConverteFácil.
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: Ingo Stramm
  * Text Domain: cfv3
  * License: GPLv2
