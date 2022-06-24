@@ -9,7 +9,6 @@ function cfv3_is_not_an_administrator_admin_bar()
 
 
     add_action('admin_bar_menu', 'cfv3_remove_admin_bar_menu_items', 999);
-
     add_action('admin_bar_menu', 'cfv3_admin_bar_hummingbird_clear_cache_button', 500);
 
     add_action('wp_head', 'cfv3_admin_bar_hide_empty_avatar');
@@ -40,6 +39,29 @@ function cfv3_remove_admin_bar_menu_items($wp_admin_bar)
     $wp_admin_bar->remove_node('support-forums');
     $wp_admin_bar->remove_node('feedback');
 }
+
+function cfv3_change_wp_rocket_admin_bar_button($wp_admin_bar)
+{
+    // cfv3_debug($wp_admin_bar->get_node('purge-all'));
+    $new_node = $wp_admin_bar->get_node('purge-all');
+    // cfv3_debug($new_node->id);
+    // cfv3_debug($new_node->title);
+    // cfv3_debug($new_node->href);
+    // cfv3_debug($new_node->group);
+    // cfv3_debug($new_node->meta);
+    $wp_admin_bar->remove_node('wp-rocket');
+    $clear_wp_rocket_cache_node = array(
+        'id'        => 'cf-wp-rocket',
+        'title'        => $new_node->title,
+        'href'        => $new_node->href,
+        // 'group'        => $new_node->group,
+        // 'meta'        => $new_node->meta
+    );
+    // cfv3_debug($clear_wp_rocket_cache_node);
+    $wp_admin_bar->add_node($clear_wp_rocket_cache_node);
+}
+
+add_action('admin_bar_menu', 'cfv3_change_wp_rocket_admin_bar_button', PHP_INT_MAX - 1);
 
 /**
  * 
