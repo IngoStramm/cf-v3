@@ -52,9 +52,9 @@ add_action('admin_init', 'cfv3_editor_role_caps');
 function cfv3_shop_editor_role_caps()
 {
     $shop_editor_role_object = get_role('shop_editor');
-    $shop_editor_role_object->add_cap('rocket_purge_cache');
     if (!isset($shop_editor_role_object))
-        return;
+    return;
+    $shop_editor_role_object->add_cap('rocket_purge_cache');
     $cfv3_disable_users_restriction = cfv3_get_option('cfv3_disable_users_restriction');
     if ($cfv3_disable_users_restriction) {
         $shop_editor_role_object->add_cap('list_users');
