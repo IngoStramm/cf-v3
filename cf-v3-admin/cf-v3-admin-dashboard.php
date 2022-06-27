@@ -12,22 +12,22 @@ function cfv3_is_not_an_administrator_admin_dashboard()
     if (!cfv3_is_not_administrador())
         return;
 
-    add_action('wp_dashboard_setup', 'cfa_admin_dashboard_widgets');
+    add_action('wp_dashboard_setup', 'cfa_remove_all_admin_dashboard_widgets', PHP_INT_MAX - 1);
 
     /**
      * 
      * Dashboard: Customiza os Widgets
      * 
-     * cfa_admin_dashboard_widgets
+     * cfa_remove_all_admin_dashboard_widgets
      *
      * @return void
      */
-    function cfa_admin_dashboard_widgets()
+    function cfa_remove_all_admin_dashboard_widgets()
     {
         cfv3_remove_all_widgets();
     }
 
-    add_action('wp_dashboard_setup', 'cfv3_add_admin_widgets');
+    add_action('wp_dashboard_setup', 'cfv3_add_admin_widgets', PHP_INT_MAX);
 
     /**
      * Adiciona os widgets do Painel Converte Fácil
