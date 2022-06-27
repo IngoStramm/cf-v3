@@ -24,7 +24,7 @@ function cfv3_is_not_an_administrator_admin_dashboard()
      */
     function cfa_admin_dashboard_widgets()
     {
-        cfv3_remove_widgets();
+        cfv3_remove_all_widgets();
     }
 
     add_action('wp_dashboard_setup', 'cfv3_add_admin_widgets');
@@ -45,39 +45,15 @@ function cfv3_is_not_an_administrator_admin_dashboard()
 /**
  * Remove os widgets padrão do WordPress e de alguns plugins
  * 
- * cfv3_remove_widgets
+ * cfv3_remove_all_widgets
  *
  * @return void
  */
-function cfv3_remove_widgets()
+function cfv3_remove_all_widgets()
 {
     global $wp_meta_boxes;
 
-    // Agora
-    unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
-    // Elementor
-    unset($wp_meta_boxes['dashboard']['normal']['core']['e-dashboard-overview']);
-    // Samrt Crawl
-    unset($wp_meta_boxes['dashboard']['normal']['core']['wds_sitemaps_dashboard_widget']);
-    // Postagem rápida
-    unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
-    // Novidades WP
-    unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-    // Atividades
-    unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
-    // Health Check
-    unset($wp_meta_boxes['dashboard']['normal']['core']['health_check_status']);
-    unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_site_health']);
-    // Booking
-    unset($wp_meta_boxes['dashboard']['normal']['core']['booking_dashboard_widget']);
-    // Woocommerce Avaliações Recentes
-    remove_meta_box('woocommerce_dashboard_recent_reviews', 'dashboard', 'normal');
-    // Woocommerce Status
-    remove_meta_box('woocommerce_dashboard_status', 'dashboard', 'normal');
-    // Yoast
-    remove_meta_box('wpseo-dashboard-overview', 'dashboard', 'normal');
-    remove_meta_box('yith_dashboard_products_news', 'dashboard', 'normal');
-    remove_meta_box('yith_dashboard_blog_news', 'dashboard', 'normal');
+    unset($wp_meta_boxes['dashboard']);
 }
 
 /**
