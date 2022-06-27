@@ -1,20 +1,5 @@
 <?php
 
-add_action('init', 'cfv3_is_not_an_administrator_admin_bar');
-
-function cfv3_is_not_an_administrator_admin_bar()
-{
-    if (!cfv3_is_not_administrador())
-        return;
-
-
-    add_action('admin_bar_menu', 'cfv3_remove_admin_bar_menu_items', 999);
-    add_action('admin_bar_menu', 'cfv3_admin_bar_hummingbird_clear_cache_button', 500);
-
-    add_action('wp_head', 'cfv3_admin_bar_hide_empty_avatar');
-    add_action('admin_head', 'cfv3_admin_bar_hide_empty_avatar');
-}
-
 /**
  * 
  * Remove itens do admin bar
@@ -26,10 +11,16 @@ function cfv3_is_not_an_administrator_admin_bar()
  */
 function cfv3_remove_admin_bar_menu_items($wp_admin_bar)
 {
+    if (!cfv3_is_not_administrador())
+        return;
+
     $cfv3_comments_status = get_default_comment_status();
     if ($cfv3_comments_status !== 'open')
         $wp_admin_bar->remove_node('comments');
+        
 
+    $wp_admin_bar->remove_node('new-content');
+    $wp_admin_bar->remove_node('customize');
     $wp_admin_bar->remove_node('wp-logo');
     $wp_admin_bar->remove_node('wds_wizard');
     $wp_admin_bar->remove_node('disqus');
@@ -40,24 +31,33 @@ function cfv3_remove_admin_bar_menu_items($wp_admin_bar)
     $wp_admin_bar->remove_node('feedback');
 }
 
+add_action('admin_bar_menu', 'cfv3_remove_admin_bar_menu_items', 999);
+
+/**
+ *
+ * Altera o botão de limpar o cache do WP Rocket no admin bar,
+ * para só exibir o botão e não o "node pai"
+ * 
+ *  cfv3_change_wp_rocket_admin_bar_button
+ *
+ * @param  object $wp_admin_bar
+ * @return void
+ */
 function cfv3_change_wp_rocket_admin_bar_button($wp_admin_bar)
 {
-    // cfv3_debug($wp_admin_bar->get_node('purge-all'));
+    if (!cfv3_is_not_administrador())
+        return;
+
+    if (!function_exists('rocket_load_textdomain'))
+        return;
+
     $new_node = $wp_admin_bar->get_node('purge-all');
-    // cfv3_debug($new_node->id);
-    // cfv3_debug($new_node->title);
-    // cfv3_debug($new_node->href);
-    // cfv3_debug($new_node->group);
-    // cfv3_debug($new_node->meta);
     $wp_admin_bar->remove_node('wp-rocket');
     $clear_wp_rocket_cache_node = array(
         'id'        => 'cf-wp-rocket',
         'title'        => $new_node->title,
         'href'        => $new_node->href,
-        // 'group'        => $new_node->group,
-        // 'meta'        => $new_node->meta
     );
-    // cfv3_debug($clear_wp_rocket_cache_node);
     $wp_admin_bar->add_node($clear_wp_rocket_cache_node);
 }
 
@@ -73,12 +73,15 @@ add_action('admin_bar_menu', 'cfv3_change_wp_rocket_admin_bar_button', PHP_INT_M
  * @param  class $admin_bar
  * @return void
  */
-function cfv3_admin_bar_hummingbird_clear_cache_button(WP_Admin_Bar $admin_bar)
+function cfv3_admin_bar_hummingbird_clear_cache_button($wp_admin_bar)
 {
+    if (!cfv3_is_not_administrador())
+        return;
+
     if (!class_exists('Hummingbird\\WP_Hummingbird'))
         return;
 
-    $admin_bar->add_menu(array(
+    $wp_admin_bar->add_menu(array(
         'id'    => 'cfv3-clear-cache',
         'parent' => null,
         'group'  => null,
@@ -90,6 +93,8 @@ function cfv3_admin_bar_hummingbird_clear_cache_button(WP_Admin_Bar $admin_bar)
     ));
 }
 
+add_action('admin_bar_menu', 'cfv3_admin_bar_hummingbird_clear_cache_button', 500);
+
 /**
  * 
  * Esconde via CSS o avatar se o WordPress estiver configurado para não exibir um avatar
@@ -100,6 +105,9 @@ function cfv3_admin_bar_hummingbird_clear_cache_button(WP_Admin_Bar $admin_bar)
  */
 function cfv3_admin_bar_hide_empty_avatar()
 {
+    if (!cfv3_is_not_administrador())
+        return;
+
 ?>
     <style>
         #wpadminbar #wp-admin-bar-my-account.with-avatar>.ab-empty-item img,
@@ -114,3 +122,6 @@ function cfv3_admin_bar_hide_empty_avatar()
     </style>
 <?php
 }
+
+add_action('wp_head', 'cfv3_admin_bar_hide_empty_avatar');
+add_action('admin_head', 'cfv3_admin_bar_hide_empty_avatar');

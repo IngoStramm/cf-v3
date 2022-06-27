@@ -34,7 +34,6 @@ function cfv3_is_not_an_administrator_admin_notices()
 
             foreach ($xml->children() as $node_1) {
                 foreach ($node_1->item as $node_2) {
-                    cfv3_debug($node_2);
                     $arr_notice = [];
 
                     $arr_notice['title'] = (string)$node_2->title === 'Sem título' ? '' : (string)$node_2->title;
