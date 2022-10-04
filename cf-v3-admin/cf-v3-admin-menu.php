@@ -7,11 +7,11 @@ function cfv3_is_not_an_administrator_admin_menu()
     if (!cfv3_is_not_administrador())
         return;
 
-    add_action('admin_menu', 'cfv3_remove_menu_items');
+    add_action('admin_menu', 'cfv3_remove_menu_items', 99);
 
-    add_action('admin_menu', 'cfv3_rename_menu_items');
+    add_action('admin_menu', 'cfv3_rename_menu_items', 99);
 
-    add_action('admin_menu', 'cfv3_add_menu_items');
+    add_action('admin_menu', 'cfv3_add_menu_items', 99);
 }
 
 add_action('init', 'cfv3_is_not_an_administrator_and_not_an_editor_admin_menu');
@@ -43,7 +43,8 @@ function cfv3_is_not_an_administrator_and_not_an_editor_admin_menu()
  */
 function cfv3_remove_menu_items()
 {
-    // global $menu, $submenu;
+    global $menu, $submenu;
+    // cfv3_debug($menu);
     add_menu_page(__('Editar Menus'), __(' Menus '), 'edit_theme_options', 'nav-menus.php', null, 'dashicons-menu', 60);
 
     //Elementor
@@ -57,6 +58,19 @@ function cfv3_remove_menu_items()
     remove_menu_page('edit.php?post_type=blocks');
     remove_menu_page('qligg');
     remove_menu_page('disqus');
+    //Crocoblock
+    remove_menu_page('jet-dashboard');
+    //Smart Filters
+    remove_menu_page('edit.php?post_type=jet-smart-filters');
+    //Jet Engine
+    remove_menu_page('jet-engine');
+    //Segurança WP
+    remove_menu_page('aiowpsec');
+
+    // Woocommerce
+    remove_submenu_page('woocommerce', 'wc-settings');
+    remove_submenu_page('woocommerce', 'wc-status');
+    remove_submenu_page('woocommerce', 'wc-addons');
 
     // Envato Elements
     remove_submenu_page('envato-elements', 'envato-elements#/welcome');
