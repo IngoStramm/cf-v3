@@ -78,3 +78,39 @@ function cfv3_shop_editor_role_caps()
 }
 
 add_action('admin_init', 'cfv3_shop_editor_role_caps');
+
+/**
+ * Controla se deve restringir a gestão de usuários para a role "shop_manager" (WooCommerce)
+ * 
+ * cfv3_shop_manager_role_caps
+ *
+ * @return void
+ */
+function cfv3_shop_manager_role_caps()
+{
+    $shop_manager_role_object = get_role('shop_manager');
+    if (!isset($shop_manager_role_object))
+        return;
+    // wp-rocket
+    $shop_manager_role_object->add_cap('rocket_purge_cache');
+    $cfv3_disable_users_restriction = cfv3_get_option('cfv3_disable_users_restriction');
+    if ($cfv3_disable_users_restriction) {
+        $shop_manager_role_object->add_cap('list_users');
+        $shop_manager_role_object->add_cap('edit_users');
+        $shop_manager_role_object->add_cap('delete_users');
+        $shop_manager_role_object->add_cap('create_users');
+        $shop_manager_role_object->add_cap('add_users');
+        $shop_manager_role_object->add_cap('promote_users');
+        $shop_manager_role_object->add_cap('remove_users');
+    } else {
+        $shop_manager_role_object->remove_cap('list_users');
+        $shop_manager_role_object->remove_cap('edit_users');
+        $shop_manager_role_object->remove_cap('delete_users');
+        $shop_manager_role_object->remove_cap('create_users');
+        $shop_manager_role_object->remove_cap('add_users');
+        $shop_manager_role_object->remove_cap('promote_users');
+        $shop_manager_role_object->remove_cap('remove_users');
+    }
+}
+
+add_action('admin_init', 'cfv3_shop_manager_role_caps');

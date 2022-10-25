@@ -17,7 +17,7 @@ function cfv3_remove_admin_bar_menu_items($wp_admin_bar)
     $cfv3_comments_status = get_default_comment_status();
     if ($cfv3_comments_status !== 'open')
         $wp_admin_bar->remove_node('comments');
-        
+
 
     $wp_admin_bar->remove_node('new-content');
     $wp_admin_bar->remove_node('customize');
@@ -29,9 +29,26 @@ function cfv3_remove_admin_bar_menu_items($wp_admin_bar)
     $wp_admin_bar->remove_node('documentation');
     $wp_admin_bar->remove_node('support-forums');
     $wp_admin_bar->remove_node('feedback');
+    $wp_admin_bar->remove_node('elementor_app_site_editor');
 }
 
 add_action('admin_bar_menu', 'cfv3_remove_admin_bar_menu_items', 999);
+
+/**
+ * cfv3_elementor_admin_bar
+ *
+ * @param  array $admin_bar_config
+ * @return array
+ */
+function cfv3_elementor_admin_bar($admin_bar_config)
+{
+    if (cfv3_is_not_administrador())
+        return;
+
+    return $admin_bar_config;
+}
+
+add_filter('elementor/frontend/admin_bar/settings', 'cfv3_elementor_admin_bar');
 
 /**
  *
