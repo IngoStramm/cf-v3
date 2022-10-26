@@ -1,7 +1,7 @@
 {
     "name": "cf-v3",
     "description": "Plugin do Converte Fácil",
-    "version": "3.0.11",
+    "version": "3.0.12",
     "title": "Converte Fácil",
     "homepage": "https://agencialaf.com",
     "main": "Gruntfile.js",

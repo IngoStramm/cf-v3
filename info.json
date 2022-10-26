@@ -1,6 +1,6 @@
 {
     "name": "ConverteFacil Admin",
-    "version": "3.0.11",
+    "version": "3.0.12",
     "download_url": "https://github.com/IngoStramm/cf-v3/raw/master/dist/cf-v3.zip",
     "homepage": "https://agencialaf.com",
     "requires": "4.7",

@@ -44,7 +44,7 @@ function cfv3_is_not_an_administrator_and_not_an_editor_admin_menu()
 function cfv3_remove_menu_items()
 {
     global $menu, $submenu;
-    // cfv3_debug($menu);
+    // cfv3_debug($submenu);
     add_menu_page(__('Editar Menus'), __(' Menus '), 'edit_theme_options', 'nav-menus.php', null, 'dashicons-menu', 60);
 
     //Elementor
@@ -79,6 +79,9 @@ function cfv3_remove_menu_items()
     remove_submenu_page('envato-elements', 'envato-elements#/template-kits/free-blocks');
     remove_submenu_page('envato-elements', 'envato-elements#/template-kits/installed-kits');
 
+    // WP Load Gallery
+    remove_submenu_page('wp-load-gallery', 'load_gallery_cloud');
+
     $cfv3_comments_status = get_default_comment_status();
     if ($cfv3_comments_status !== 'open')
         remove_menu_page('edit-comments.php');
@@ -101,7 +104,7 @@ function cfv3_rename_menu_items()
 
             $menu[$k][0] = __('Dashboard Converte Fácil', 'cf_v3');
 
-        elseif ($item[1] == 'upload_files') :
+        elseif ($item[2] == 'upload.php') :
 
             $menu[$k][0] = __('Biblioteca de Arquivos', 'cf_v3');
 
